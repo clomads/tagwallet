@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "com.vdbx.tagwallet"
+    versionCode = "10"
+    version     = "0.0.1" >
+
+<!-- versionCode is optional and Android only -->
+
+  <name>Tag Wallet</name>
+
+  <description>
+      Tag wallet helps you organize and retrieve hashtags with a focus on use with Instagram.
+  </description>
+
+  <author href="https://www.vdbx.io" email="hello@vdbx.io">
+      Chloe Madison of Voidbox Industries
+  </author>
+
+</widget>
