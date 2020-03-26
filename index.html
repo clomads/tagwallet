@@ -9,12 +9,138 @@
     <title>Doot</title>
   </head>
   <body>
-  <h1>Hello World</h1>
+  <div class="fixed-navbar">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#!" class="brand-logo">
+          <i class="material-icons">cloud</i>Logo</a>
+        <ul class="right hide-on-med-and-down">
+          <li>
+            <a href="sass.html">
+              <i class="material-icons">search</i>
+            </a></li>
+          <li>
+            <a href="badges.html">
+              <i class="material-icons">view_module</i>
+            </a></li>
+          <li>
+            <a href="collapsible.html">
+              <i class="material-icons">refresh</i>
+            </a></li>
+          <li>
+            <a href="mobile.html">
+              <i class="material-icons">more_vert</i>
+              </a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  
+  <h1>Tag Wallet</h1>
   <p>poop</p>
+  
+  
+  <input
+    name='input'
+    class='some_class_name' // will be copied to the Tagify component
+    placeholder='write some tags' // This shown after the last tag
+    value='css, html, javascript, css'   // initial values, as String
+    >  
   
   
   <!-- javascripts -->
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script type="text/javascript" src="js/tagify.min.js"></script>
+  <script type="text/javascript">
+  
+  var input = document.querySelector('input[name=input]'),
+    whitelist = ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
+
+    // init Tagify script on the above inputs
+    tagify = new Tagify(input, {
+        // after 2 characters typed, all matching values from this list will be suggested in a dropdown
+        // whitelist: [].concat(whitelist)
+    })
+
+
+// "remove all tags" button event listener
+document.querySelector('.tags--removeAllBtn')
+    .addEventListener('click', tagify.removeAllTags.bind(tagify))
+
+// Chainable event listeners
+tagify.on('add', onAddTag)
+      .on('remove', onRemoveTag)
+      .on('input', onInput)
+      .on('edit', onTagEdit)
+      .on('invalid', onInvalidTag)
+      .on('click', onTagClick)
+      .on('focus', onTagifyFocusBlur)
+      .on('blur', onTagifyFocusBlur)
+      .on('dropdown:hide dropdown:show', e => console.log(e.type))
+      .on('dropdown:select', onDropdownSelect)
+
+var mockAjax = (function mockAjax(){
+    var timeout;
+    return function(duration){
+        clearTimeout(timeout); // abort last request
+        return new Promise(function(resolve, reject){
+            timeout = setTimeout(resolve, duration || 1000, whitelist)
+        })
+    }
+})()
+
+// tag added callback
+function onAddTag(e){
+    console.log("onAddTag: ", e.detail);
+    console.log("original input value: ", input.value)
+    tagify.off('add', onAddTag) // exmaple of removing a custom Tagify event
+}
+
+// tag remvoed callback
+function onRemoveTag(e){
+    console.log("onRemoveTag:", e.detail, "tagify instance value:", tagify.value)
+}
+
+// on character(s) added/removed (user is typing/deleting)
+function onInput(e){
+    console.log("onInput: ", e.detail);
+    tagify.settings.whitelist.length = 0; // reset current whitelist
+    tagify.loading(true).dropdown.hide.call(tagify) // show the loader animation
+
+    // get new whitelist from a delayed mocked request (Promise)
+    mockAjax()
+        .then(function(result){
+            // https://stackoverflow.com/q/30640771/104380
+            // replace tagify "whitelist" array values with new values (result)
+            tagify.settings.whitelist.splice(0, result.length, ...result)
+            // render the suggestions dropdown. "newValue" is when "input" event is called while editing a tag
+            tagify.loading(false).dropdown.show.call(tagify, e.detail.value);
+        })
+}
+
+function onTagEdit(e){
+    console.log("onTagEdit: ", e.detail);
+}
+
+// invalid tag added callback
+function onInvalidTag(e){
+    console.log("onInvalidTag: ", e.detail);
+}
+
+// invalid tag added callback
+function onTagClick(e){
+    console.log(e.detail);
+    console.log("onTagClick: ", e.detail);
+}
+
+function onTagifyFocusBlur(e){
+    console.log(e.type, "event fired")
+}
+
+function onDropdownSelect(e){
+    console.log("onDropdownSelect: ", e.detail)
+}
+  
+  </script>
   </body>
 </html>
