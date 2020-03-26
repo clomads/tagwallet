@@ -3,7 +3,7 @@
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "com.vdbx.tagwallet"
     versionCode = "10"
-    version     = "0.0.8" >
+    version     = "0.0.9" >
 
 <preference name="phonegap-version" value="cli-9.0.0" />
 <preference name="android-targetSdkVersion" value="28" />
