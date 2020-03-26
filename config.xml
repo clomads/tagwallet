@@ -3,12 +3,12 @@
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "com.vdbx.tagwallet"
     versionCode = "10"
-    version     = "0.0.3" >
+    version     = "0.0.4" >
 
 <preference name="phonegap-version" value="cli-9.0.0" />
 <preference name="android-targetSdkVersion" value="28" />
 
-<!-- versionCode is optional and Android only -->
+<!-- targetSdkVersion not working? -->
 
   <name>Tag Wallet</name>
 
